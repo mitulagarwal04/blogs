@@ -13,61 +13,84 @@
 </header>
 
 <nav class="subnav" aria-label="Index sections">
-  <a href="#latest">Latest</a>
-  <a href="#browse">Browse</a>
+  <a href="#reader">Reader</a>
+  <a href="#browse">List</a>
   <a href="#tags">Tags</a>
 </nav>
 
-<section class="tiles" id="latest" aria-label="Stats">
-  <div class="tile key"><b>{{ stats.posts }}</b><span>posts</span></div>
-  <div class="tile"><b>{{ stats.tags }}</b><span>tags</span></div>
-  <div class="tile"><b>{{ stats.words }}</b><span>words</span></div>
-  <div class="tile"><b>{{ stats.latest }}</b><span>latest</span></div>
-</section>
+<div class="home-layout">
+  <section class="panel reader" id="reader" aria-live="polite" aria-label="Reader">
+    {% if posts %}
+    {% set featured = posts[0] %}
+    <div class="pad">
+      <div class="meta" id="reader-kicker">{% if q or active_tag %}Top match{% else %}Latest{% endif %} · <span id="reader-date">{{ featured.date }}</span></div>
+      <h2 id="reader-title"><a href="/post/{{ featured.slug }}">{{ featured.title }}</a></h2>
+      <div class="by" id="reader-meta">{{ featured.reading_mins }} min read · {{ featured.words }} words</div>
+      <div class="reader-tags" id="reader-tags">
+        {% for t in featured.tags %}<span class="pill"><span class="dot" style="background:{{ tag_color(t) }};width:8px;height:8px"></span> #{{ t }}</span>{% endfor %}
+      </div>
+      <div class="article-body" id="reader-body">{{ featured.html | safe }}</div>
+      <div class="reader-foot">
+        <a class="btn primary" id="reader-open" href="/post/{{ featured.slug }}">Open full page →</a>
+      </div>
+    </div>
+    {% else %}
+    <div class="pad">
+      <h2>Nothing here yet</h2>
+      <p class="lede">Write your first note in <code>posts/</code>.</p>
+    </div>
+    {% endif %}
+  </section>
 
-<section class="panel" id="browse">
-  <div class="pad">
-    <h2>Notes</h2>
-    <p class="lede">Learning, building, readings, short notes. Search, or pick a tag.</p>
-    <div class="search-header">
-      <label class="search-wrap"><input id="q" type="search" placeholder="Search notes…  (e.g. fastapi)" value="{{ q }}" autocomplete="off"></label>
-      <form method="get" action="/" style="display:contents">
-        <input type="hidden" name="q" value="{{ q }}">
-        <select class="sortsel" name="sort" onchange="this.form.submit()" aria-label="Sort">
-          <option value="newest" {% if sort=='newest' %}selected{% endif %}>sort: newest</option>
-          <option value="oldest" {% if sort=='oldest' %}selected{% endif %}>sort: oldest</option>
-          <option value="shortest" {% if sort=='shortest' %}selected{% endif %}>sort: shortest</option>
-        </select>
-      </form>
+  <aside class="side-right" id="browse" aria-label="Notes list">
+    <div class="panel controls">
+      <div class="pad">
+        <h2>Notes</h2>
+        <p class="lede">Search, or pick a tag.</p>
+        <div class="search-header">
+          <label class="search-wrap"><input id="q" type="search" placeholder="Search notes…  (e.g. fastapi)" value="{{ q }}" autocomplete="off"></label>
+          <form method="get" action="/" style="display:contents">
+            <input type="hidden" name="q" value="{{ q }}">
+            <select class="sortsel" name="sort" onchange="this.form.submit()" aria-label="Sort">
+              <option value="newest" {% if sort=='newest' %}selected{% endif %}>sort: newest</option>
+              <option value="oldest" {% if sort=='oldest' %}selected{% endif %}>sort: oldest</option>
+              <option value="shortest" {% if sort=='shortest' %}selected{% endif %}>sort: shortest</option>
+            </select>
+          </form>
+        </div>
+        <div class="search-header" id="tags">
+          <a class="achip {{ 'on' if not active_tag else '' }}" href="/" data-tag-filter="">✦ all</a>
+          {% for t in tags %}
+          <a class="achip {{ 'on' if active_tag==t.name else '' }}" href="/?tag={{ t.name }}" data-tag-filter="{{ t.name }}"><span class="dot" style="background:{{ t.color }}"></span>#{{ t.name }} · {{ t.count }}</a>
+          {% endfor %}
+        </div>
+        <div id="results-bar" class="meta" style="display:none;margin-top:8px"><span></span> · <a href="/">clear</a></div>
+      </div>
     </div>
-    <div class="search-header" id="tags">
-      <a class="achip {{ 'on' if not active_tag else '' }}" href="/" data-tag-filter="">✦ all</a>
-      {% for t in tags %}
-      <a class="achip {{ 'on' if active_tag==t.name else '' }}" href="/?tag={{ t.name }}" data-tag-filter="{{ t.name }}"><span class="dot" style="background:{{ t.color }}"></span>#{{ t.name }} · {{ t.count }}</a>
-      {% endfor %}
-    </div>
-    <div id="results-bar" class="meta" style="display:none;margin-top:8px"><span></span> · <a href="/">clear</a></div>
-    <div class="grid" id="cards">
+    <div class="grid side-list" id="cards">
       {% for p in posts %}
-      <article class="card" data-search="{{ p.title }} {{ p.excerpt }} {{ p.tags|join(' ') }}" data-tags="{{ p.tags|join(',') }}">
+      <article class="card compact {{ 'active' if loop.first else '' }}" data-slug="{{ p.slug }}" data-title="{{ p.title }}" data-date="{{ p.date }}" data-mins="{{ p.reading_mins }}" data-words="{{ p.words }}" data-search="{{ p.title }} {{ p.excerpt }} {{ p.tags|join(' ') }}" data-tags="{{ p.tags|join(',') }}">
         <div class="card-top"><span class="rank">{{ loop.index }}</span>
           {% if p.tags %}<span class="catpill" style="border-color:{{ tag_color(p.tags[0]) }}">#{{ p.tags[0] }}</span>{% endif %}
           <span style="margin-left:auto" class="meta">{{ p.date }}</span>
         </div>
-        <h3><a href="/post/{{ p.slug }}">{{ p.title }}</a></h3>
+        <h3><a href="/post/{{ p.slug }}" data-preview="{{ p.slug }}">{{ p.title }}</a></h3>
         <div class="by">{{ p.reading_mins }} min read</div>
         <p class="desc">{{ p.excerpt }}</p>
-        <div class="metrics"><span>{{ p.reading_mins }} min</span><span>{{ p.words }} words</span></div>
         <div class="links">
           {% for t in p.tags %}<span class="pill"><span class="dot" style="background:{{ tag_color(t) }};width:8px;height:8px"></span> #{{ t }}</span>{% endfor %}
-          <a class="btn primary" href="/post/{{ p.slug }}" style="margin-left:auto;padding:6px 14px">Read →</a>
+          <button class="btn primary preview-btn" data-preview="{{ p.slug }}" style="margin-left:auto;padding:6px 14px" type="button">Read →</button>
         </div>
       </article>
       {% endfor %}
     </div>
     <div id="no-results" class="empty">Nothing matches. <a href="/">Clear filters</a> or write it in <code>posts/</code>.</div>
-  </div>
-</section>
+  </aside>
+</div>
+
+{% for p in posts %}
+<template id="post-body-{{ p.slug }}">{{ p.html | safe }}</template>
+{% endfor %}
 
 <section class="missing">
   <div>
