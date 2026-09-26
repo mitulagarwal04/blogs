@@ -51,7 +51,12 @@ def parse_post_file(path: Path) -> dict:
         if len(parts) >= 3:
             _, fm, body = parts
             meta = yaml.safe_load(fm) or {}
-    html = markdown.markdown(body.strip(), extensions=["fenced_code", "tables", "toc"])
+    body = split_code_comments(body.strip())
+    html = markdown.markdown(
+        body,
+        extensions=["fenced_code", "tables", "toc", "codehilite"],
+        extension_configs={"codehilite": {"guess_lang": False, "css_class": "codehilite"}},
+    )
     # plain text for search + reading time
     plain = re.sub(r"<[^>]+>", " ", html)
     words = len(re.findall(r"\w+", plain))
@@ -97,6 +102,38 @@ def all_tags(posts: list[dict]) -> list[dict]:
 
 def tag_color(tag: str) -> str:
     return TAG_COLORS.get(tag, DEFAULT_TAG_COLOR)
+
+
+def split_code_comments(body: str) -> str:
+    """Pull full-line `#` comments out of python fenced blocks.
+
+    Code stays clean for highlighting; the comments reappear as a
+    <ul class="code-notes"> bullet list right below their block.
+    Only applies when the block keeps real code after stripping.
+    """
+    import html as _html
+
+    pattern = re.compile(r"```(python|py)\b[^\S\n]*\n(.*?)```", re.DOTALL | re.IGNORECASE)
+
+    def repl(m: re.Match) -> str:
+        lang, code = m.group(1), m.group(2)
+        notes: list[str] = []
+        kept: list[str] = []
+        for line in code.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#"):
+                notes.append(re.sub(r"^#+\s?", "", stripped))
+            else:
+                kept.append(line)
+        if not notes or not any(l.strip() for l in kept):
+            return m.group(0)
+        items = "\n".join(f"<li>{_html.escape(n)}</li>" for n in notes if n)
+        block = f"```{lang}\n" + "\n".join(kept).rstrip() + "\n```"
+        if items:
+            block += f'\n\n<ul class="code-notes">\n{items}\n</ul>'
+        return block
+
+    return pattern.sub(repl, body)
 
 
 @app.get("/", response_class=HTMLResponse)
