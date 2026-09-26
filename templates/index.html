@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}Daily Notes{% endblock %}
+{% block content %}
+<header class="hero">
+  <div class="hero-row">
+    <div class="hero-img"><img src="/static/hero.png" alt="SpongeBob bursting out of a bathtub"></div>
+    <div class="hero-text">
+      <h1 class="hero-title">Daily <mark>Notes</mark></h1>
+      <p class="hero-sub">I keep my notes here instead of scattering them across timelines. What I'm learning, what I'm building, what I read, and short stuff.</p>
+      <div class="meta">updated {{ stats.latest }} · {{ stats.posts }} posts so far</div>
+    </div>
+  </div>
+</header>
+
+<nav class="subnav" aria-label="Index sections">
+  <a href="#latest">Latest</a>
+  <a href="#browse">Browse</a>
+  <a href="#tags">Tags</a>
+</nav>
+
+<section class="tiles" id="latest" aria-label="Stats">
+  <div class="tile key"><b>{{ stats.posts }}</b><span>posts</span></div>
+  <div class="tile"><b>{{ stats.tags }}</b><span>tags</span></div>
+  <div class="tile"><b>{{ stats.words }}</b><span>words</span></div>
+  <div class="tile"><b>{{ stats.latest }}</b><span>latest</span></div>
+</section>
+
+<section class="panel" id="browse">
+  <div class="pad">
+    <h2>Notes</h2>
+    <p class="lede">Learning, building, readings, short notes. Search, or pick a tag.</p>
+    <div class="search-header">
+      <label class="search-wrap"><input id="q" type="search" placeholder="Search notes…  (e.g. fastapi)" value="{{ q }}" autocomplete="off"></label>
+      <form method="get" action="/" style="display:contents">
+        <input type="hidden" name="q" value="{{ q }}">
+        <select class="sortsel" name="sort" onchange="this.form.submit()" aria-label="Sort">
+          <option value="newest" {% if sort=='newest' %}selected{% endif %}>sort: newest</option>
+          <option value="oldest" {% if sort=='oldest' %}selected{% endif %}>sort: oldest</option>
+          <option value="shortest" {% if sort=='shortest' %}selected{% endif %}>sort: shortest</option>
+        </select>
+      </form>
+    </div>
+    <div class="search-header" id="tags">
+      <a class="achip {{ 'on' if not active_tag else '' }}" href="/" data-tag-filter="">✦ all</a>
+      {% for t in tags %}
+      <a class="achip {{ 'on' if active_tag==t.name else '' }}" href="/?tag={{ t.name }}" data-tag-filter="{{ t.name }}"><span class="dot" style="background:{{ t.color }}"></span>#{{ t.name }} · {{ t.count }}</a>
+      {% endfor %}
+    </div>
+    <div id="results-bar" class="meta" style="display:none;margin-top:8px"><span></span> · <a href="/">clear</a></div>
+    <div class="grid" id="cards">
+      {% for p in posts %}
+      <article class="card" data-search="{{ p.title }} {{ p.excerpt }} {{ p.tags|join(' ') }}" data-tags="{{ p.tags|join(',') }}">
+        <div class="card-top"><span class="rank">{{ loop.index }}</span>
+          {% if p.tags %}<span class="catpill" style="border-color:{{ tag_color(p.tags[0]) }}">#{{ p.tags[0] }}</span>{% endif %}
+          <span style="margin-left:auto" class="meta">{{ p.date }}</span>
+        </div>
+        <h3><a href="/post/{{ p.slug }}">{{ p.title }}</a></h3>
+        <div class="by">{{ p.reading_mins }} min read</div>
+        <p class="desc">{{ p.excerpt }}</p>
+        <div class="metrics"><span>{{ p.reading_mins }} min</span><span>{{ p.words }} words</span></div>
+        <div class="links">
+          {% for t in p.tags %}<span class="pill"><span class="dot" style="background:{{ tag_color(t) }};width:8px;height:8px"></span> #{{ t }}</span>{% endfor %}
+          <a class="btn primary" href="/post/{{ p.slug }}" style="margin-left:auto;padding:6px 14px">Read →</a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    <div id="no-results" class="empty">Nothing matches. <a href="/">Clear filters</a> or write it in <code>posts/</code>.</div>
+  </div>
+</section>
+
+<section class="missing">
+  <div>
+    <h2>What's not in the open</h2>
+    <p class="sub">Things I want to add when I get to them:</p>
+    <ul>
+      <li><b>RSS feed</b> — so this works in a feed reader like a normal blog</li>
+      <li><b>/now page</b> — what I'm doing this month, updated by hand</li>
+      <li><b>Reply by email</b> — a mailto link on every post instead of comments</li>
+      <li><b>Reading list</b> — one page pulling everything tagged #readings</li>
+      <li><b>Search without JS</b> — the search box works now, but only with JS on</li>
+    </ul>
+  </div>
+  <div class="side-img"><img src="/static/gary.png" alt="Gary the snail"></div>
+</section>
+{% endblock %}
