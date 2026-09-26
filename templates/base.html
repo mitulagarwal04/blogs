@@ -1,31 +1,45 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{% block title %}Daily Notes{% endblock %}</title>
-<meta name="description" content="Daily Notes — my personal log. What I'm learning, what I'm building, what I read, and short notes.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/static/style.css">
-<link rel="icon" href="/static/patty.png">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}buhh{% endblock %}</title>
+  <meta name="description"
+    content="blogs — my personal log. What I'm learning, what I'm building, what I read, and short notes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/patty.png">
 </head>
+
 <body>
-<div class="topbar">
-  <a class="wordmark" href="/"><img src="/static/patty.png" alt="">daily notes</a>
-  <button class="theme-btn" id="theme-toggle" aria-label="Toggle dark mode">
-    <svg class="icon icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-    <svg class="icon icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M4.3 4.3l1.7 1.7M18 18l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.3 19.7l1.7-1.7M18 6L19.7 4.3"/></svg>
-  </button>
-</div>
-<main>
-{% block content %}{% endblock %}
-<footer>
-  <span>my personal log · {{ stats.posts if stats is defined else '' }} posts · plain markdown, no database</span>
-  <span><a href="/api/posts">api</a></span>
-</footer>
-</main>
-<script src="/static/app.js"></script>
+  <div class="topbar">
+    <a class="wordmark" href="/"><img src="/static/patty.png" alt="">buhh</a>
+    <button class="theme-btn" id="theme-toggle" aria-label="Toggle dark mode">
+      <svg class="icon icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+      </svg>
+      <svg class="icon icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4.2" />
+        <path
+          d="M12 2.5v2.4M12 19.1v2.4M4.3 4.3l1.7 1.7M18 18l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.3 19.7l1.7-1.7M18 6L19.7 4.3" />
+      </svg>
+    </button>
+  </div>
+  <main>
+    {% block content %}{% endblock %}
+    <footer>
+      <span>my personal log · {{ stats.posts if stats is defined else '' }} posts · plain markdown, no database</span>
+      <span><a href="/api/posts">api</a></span>
+    </footer>
+  </main>
+  <script src="/static/app.js"></script>
 </body>
+
 </html>
