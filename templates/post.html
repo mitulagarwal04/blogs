@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}{{ post.title }} — Daily Notes{% endblock %}
+{% block content %}
+<div class="crumbs"><a href="/">← All notes</a>{% if prev_post %}<a href="/post/{{ prev_post.slug }}">← {{ prev_post.title[:28] }}</a>{% endif %}{% if next_post %}<a href="/post/{{ next_post.slug }}">{{ next_post.title[:28] }} →</a>{% endif %}</div>
+
+<header class="post-head">
+  <h1><mark>{{ post.title }}</mark></h1>
+  <div class="post-meta">
+    <span class="meta">{{ post.date }} · {{ post.reading_mins }} min · {{ post.words }} words</span>
+  </div>
+  <div class="post-meta">
+    {% for t in post.tags %}<span class="pill"><span class="dot" style="background:{{ tag_color(t) }};width:8px;height:8px"></span> #{{ t }}</span>{% endfor %}
+  </div>
+</header>
+
+<section class="tiles">
+  <div class="tile key"><b>{{ post.date[5:] }}</b><span>date</span></div>
+  <div class="tile"><b>{{ post.reading_mins }}′</b><span>read time</span></div>
+  <div class="tile"><b>{{ post.words }}</b><span>words</span></div>
+  <div class="tile"><b>{{ post.tags|length }}</b><span>tags</span></div>
+</section>
+
+<article class="panel"><div class="pad article-body">{{ post.html | safe }}</div></article>
+
+<div class="prevnext">
+  {% if prev_post %}<a class="btn" href="/post/{{ prev_post.slug }}">← {{ prev_post.title }}</a>{% else %}<span></span>{% endif %}
+  {% if next_post %}<a class="btn primary" href="/post/{{ next_post.slug }}" style="text-align:right">{{ next_post.title }} →</a>{% endif %}
+</div>
+{% endblock %}
