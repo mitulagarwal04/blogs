@@ -13,12 +13,18 @@
   </div>
 </header>
 
-<section class="tiles">
-  <div class="tile key"><b>{{ post.date[5:] }}</b><span>date</span></div>
-  <div class="tile"><b>{{ post.reading_mins }}′</b><span>read time</span></div>
-  <div class="tile"><b>{{ post.words }}</b><span>words</span></div>
-  <div class="tile"><b>{{ post.tags|length }}</b><span>tags</span></div>
-</section>
+{% if post.toc %}
+<div class="post-layout">
+  <aside class="toc" aria-label="On this page">
+    <p class="toc-title">On this page</p>
+    <nav>
+      {% for h in post.toc %}
+      <a class="lv{{ h.level }}" href="#{{ h.id }}">{{ h.text }}</a>
+      {% endfor %}
+    </nav>
+  </aside>
+  <div class="post-main">
+{% endif %}
 
 <article class="panel"><div class="pad article-body">{{ post.html | safe }}</div></article>
 
@@ -26,4 +32,9 @@
   {% if prev_post %}<a class="btn" href="/post/{{ prev_post.slug }}">← {{ prev_post.title }}</a>{% else %}<span></span>{% endif %}
   {% if next_post %}<a class="btn primary" href="/post/{{ next_post.slug }}" style="text-align:right">{{ next_post.title }} →</a>{% endif %}
 </div>
+
+{% if post.toc %}
+  </div>
+</div>
+{% endif %}
 {% endblock %}

@@ -47,10 +47,28 @@ Krabby Patty bullets).
   count, #langchain tag color, dead --muted token, prefers-reduced-motion,
   theme-color metas.
 
-## Next up (also listed on the homepage roadmap panel)
+## Next up (homepage "What's not in the open" panel)
 
 1. RSS feed.
 2. `/now` page (updated by hand).
-3. Reply-by-email links per post.
-4. Reading-list page from `#readings` tag.
-5. ~~Search that works without JS.~~ Done in v0.2.1 (search submits `?q=`).
+3. Reading-list page from `#readings` tag.
+4. ~~Search that works without JS.~~ Done in v0.2.1 (search submits `?q=`).
+5. ~~Reply-by-email links per post.~~ Done in v0.3 — mailto replaced with
+   click-to-copy email in the footer.
+
+## Done log (continued) — v0.3
+
+- 2026-09-26: restructured LangChain post — 4 mega code blocks split into
+  19 small snippets, buried `##` comments converted to prose above each
+  snippet; fixed "LECL" → "LCEL" heading typo. Verified render + screenshot.
+- 2026-09-26: removed stat tiles from post page (+ dead tile CSS); added
+  reply-by-email (`mailto:mitulagarwal47@gmail.com`, subject prefilled) on
+  every post. Roadmap #3 done.
+- 2026-09-26: fixed post frontmatter title typo ("LangChain" → full title,
+  mailto subject now correct); backtick pass (`stream`, `batch`,
+  `lru_cache`); added "On this page" topic index sidebar on post pages
+  (h2/h3 extracted in `main.py`, sticky left on desktop, stacked on mobile).
+- 2026-09-26: homepage reader is now a fixed non-scrollable preview
+  (600px desktop / 440px mobile + fade, `overflow:clip`); reply-by-email mailto replaced with
+  click-to-copy email moved to the footer beside `api`; footer tagline
+  ("plain markdown, no database") removed.

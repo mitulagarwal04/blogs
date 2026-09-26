@@ -38,6 +38,9 @@ TAG_COLORS = {
 }
 DEFAULT_TAG_COLOR = "#8C8C8C"
 
+# Reply-by-email address shown on every post page.
+REPLY_EMAIL = "mitulagarwal47@gmail.com"
+
 app = FastAPI(title="buhh")
 app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
@@ -73,6 +76,7 @@ def parse_post_file(path: Path) -> dict:
         "html": html,
         "words": words,
         "reading_mins": max(1, math.ceil(words / 200)),
+        "toc": extract_toc(html),
     }
 
 
@@ -103,6 +107,20 @@ def all_tags(posts: list[dict]) -> list[dict]:
 
 def tag_color(tag: str) -> str:
     return TAG_COLORS.get(tag, DEFAULT_TAG_COLOR)
+
+
+def extract_toc(html: str) -> list[dict]:
+    """Pull h2/h3 headings for the post sidebar index.
+
+    Ids come from the markdown `toc` extension. Code blocks are safe to
+    scan: Pygments escapes angle brackets, so no false matches from code.
+    """
+    items = []
+    for m in re.finditer(r'<h([23]) id="([^"]+)">(.*?)</h\1>', html, re.DOTALL):
+        text = re.sub(r"<[^>]+>", "", m.group(3)).strip()
+        if text:
+            items.append({"level": int(m.group(1)), "id": m.group(2), "text": text})
+    return items
 
 
 def site_stats(posts: list[dict]) -> dict:
@@ -175,6 +193,7 @@ def index(
             "active_tag": tag,
             "sort": sort,
             "tag_color": tag_color,
+            "reply_email": REPLY_EMAIL,
         },
     )
 
@@ -197,6 +216,7 @@ def read_post(request: Request, slug: str):
             "next_post": next_post,
             "tag_color": tag_color,
             "stats": site_stats(posts),
+            "reply_email": REPLY_EMAIL,
         },
     )
 

@@ -38,8 +38,8 @@
   <main id="content">
     {% block content %}{% endblock %}
     <footer>
-      <span>my personal log · {{ stats.posts }} post{{ 's' if stats.posts != 1 else '' }} · plain markdown, no database</span>
-      <span><a href="/api/posts">api</a></span>
+      <span>my personal log · {{ stats.posts }} post{{ 's' if stats.posts != 1 else '' }}</span>
+      <span><button class="copymail" type="button" data-copy="{{ reply_email }}" title="Click to copy">{{ reply_email }}</button> · <a href="/api/posts">api</a></span>
     </footer>
   </main>
   <script src="/static/app.js"></script>

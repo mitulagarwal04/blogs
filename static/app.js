@@ -122,4 +122,29 @@
     const first = document.querySelector("#cards .card");
     if(first && readerBody) first.classList.add("active");
   }
+
+  // click-to-copy email on post pages (plain text without JS)
+  const cm = document.querySelector("[data-copy]");
+  if(cm) cm.addEventListener("click", async ()=>{
+    const t = cm.getAttribute("data-copy") || "";
+    const done = ()=>{
+      const orig = cm.textContent;
+      cm.textContent = "copied ✓";
+      setTimeout(()=>{ cm.textContent = orig; }, 1200);
+    };
+    try{
+      await navigator.clipboard.writeText(t);
+      done();
+    }catch(e){
+      try{ // fallback for non-secure contexts
+        const ta = document.createElement("textarea");
+        ta.value = t;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+        done();
+      }catch(_){}
+    }
+  });
 })();
