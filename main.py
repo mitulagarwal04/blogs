@@ -107,8 +107,8 @@ def tag_color(tag: str) -> str:
 def split_code_comments(body: str) -> str:
     """Pull full-line `#` comments out of python fenced blocks.
 
-    Code stays clean for highlighting; the comments reappear as a
-    <ul class="code-notes"> bullet list right below their block.
+    Code stays clean for highlighting; the comments reappear as simple
+    <p class="code-note"> lines right above their block.
     Only applies when the block keeps real code after stripping.
     """
     import html as _html
@@ -127,11 +127,9 @@ def split_code_comments(body: str) -> str:
                 kept.append(line)
         if not notes or not any(l.strip() for l in kept):
             return m.group(0)
-        items = "\n".join(f"<li>{_html.escape(n)}</li>" for n in notes if n)
-        block = f"```{lang}\n" + "\n".join(kept).rstrip() + "\n```"
-        if items:
-            block += f'\n\n<ul class="code-notes">\n{items}\n</ul>'
-        return block
+        out = "".join(f'<p class="code-note">{_html.escape(n)}</p>\n' for n in notes if n)
+        out += "\n" + f"```{lang}\n" + "\n".join(kept).rstrip() + "\n```"
+        return out
 
     return pattern.sub(repl, body)
 

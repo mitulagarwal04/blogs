@@ -111,9 +111,8 @@ h1.hero-title mark{background:var(--yellow);color:#232323;padding:0 .08em;border
 #reader-body{max-height:72vh;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
 #reader-body::-webkit-scrollbar{width:10px}
 #reader-body::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px}
-/* comment bullets pulled out of python code blocks */
-.code-notes{list-style:none;margin:14px 0 22px;padding:12px 16px;background:var(--paper);border:2px solid var(--ink);border-radius:12px;box-shadow:3px 3px 0 var(--shadow);display:grid;gap:8px}
-.code-notes li{font-size:15px;line-height:1.5;padding-left:28px;background:url(/static/patty.png) no-repeat left 1px/19px auto;color:var(--soft);min-height:22px}
+/* comment lines pulled out of python code blocks (rendered above the code) */
+.code-note{font-size:15px;color:var(--soft);margin:0 0 4px}
 /* pygments monokai tokens for .codehilite (div kept transparent: our dark pre shows through) */
 .article-body .codehilite{background:transparent}
 .codehilite .hll { background-color: #49483e }
