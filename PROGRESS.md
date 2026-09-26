@@ -39,6 +39,13 @@ Krabby Patty bullets).
   local SpongeBob images; roadmap panel ("What's not in the open").
 - 2026-09-26: deleted `about.html`, cleaned `main.py`; added `WRITING.md`,
   `GITHUB.md`; extended `.gitignore`.
+- 2026-09-26 (v0.2.1): brutal UI/UX audit via Playwright (screenshots:
+  desktop/mobile/dark/post). Fixed: hero copy ("T - buhh's" → "buhh's notes"),
+  "1 posts" grammar, stale "Daily Notes" brand strings, search focus indicator,
+  skip link + branded :focus-visible, mobile reader scroll trap (uncapped
+  #reader-body under 900px), no-JS search (input now submits ?q=), post footer
+  count, #langchain tag color, dead --muted token, prefers-reduced-motion,
+  theme-color metas.
 
 ## Next up (also listed on the homepage roadmap panel)
 
@@ -46,4 +53,4 @@ Krabby Patty bullets).
 2. `/now` page (updated by hand).
 3. Reply-by-email links per post.
 4. Reading-list page from `#readings` tag.
-5. Search that works without JS.
+5. ~~Search that works without JS.~~ Done in v0.2.1 (search submits `?q=`).

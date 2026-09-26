@@ -5,10 +5,10 @@
   <div class="hero-row">
     <div class="hero-img"><img src="/static/hero.png" alt="SpongeBob bursting out of a bathtub"></div>
     <div class="hero-text">
-      <h1 class="hero-title">T - <mark>buhh's</mark></h1>
+      <h1 class="hero-title"><mark>buhh's</mark> notes</h1>
       <p class="hero-sub">I keep my notes here instead of scattering them across timelines. What I'm learning, what I'm
         building, what I read, and short stuff.</p>
-      <div class="meta">updated {{ stats.latest }} · {{ stats.posts }} posts so far</div>
+      <div class="meta">updated {{ stats.latest }} · {{ stats.posts }} post{{ 's' if stats.posts != 1 else '' }} so far</div>
     </div>
   </div>
 </header>
@@ -51,10 +51,9 @@
         <h2>Notes</h2>
         <p class="lede">Search, or pick a tag.</p>
         <div class="search-header">
-          <label class="search-wrap"><input id="q" type="search" placeholder="Search notes…  (e.g. fastapi)"
-              value="{{ q }}" autocomplete="off"></label>
-          <form method="get" action="/" style="display:contents">
-            <input type="hidden" name="q" value="{{ q }}">
+          <form method="get" action="/" style="display:contents" role="search">
+            <label class="search-wrap"><input id="q" name="q" type="search" placeholder="Search notes…  (e.g. fastapi)"
+                value="{{ q }}" autocomplete="off"></label>
             <select class="sortsel" name="sort" onchange="this.form.submit()" aria-label="Sort">
               <option value="newest" {% if sort=='newest' %}selected{% endif %}>sort: newest</option>
               <option value="oldest" {% if sort=='oldest' %}selected{% endif %}>sort: oldest</option>

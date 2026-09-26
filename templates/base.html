@@ -7,6 +7,8 @@
   <title>{% block title %}buhh{% endblock %}</title>
   <meta name="description"
     content="blogs — my personal log. What I'm learning, what I'm building, what I read, and short notes.">
+  <meta name="theme-color" content="#E9E6DD" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#211F1C" media="(prefers-color-scheme: dark)">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -17,6 +19,7 @@
 </head>
 
 <body>
+  <a class="skip" href="#content">Skip to content</a>
   <div class="topbar">
     <a class="wordmark" href="/"><img src="/static/patty.png" alt="">buhh</a>
     <button class="theme-btn" id="theme-toggle" aria-label="Toggle dark mode">
@@ -32,10 +35,10 @@
       </svg>
     </button>
   </div>
-  <main>
+  <main id="content">
     {% block content %}{% endblock %}
     <footer>
-      <span>my personal log · {{ stats.posts if stats is defined else '' }} posts · plain markdown, no database</span>
+      <span>my personal log · {{ stats.posts }} post{{ 's' if stats.posts != 1 else '' }} · plain markdown, no database</span>
       <span><a href="/api/posts">api</a></span>
     </footer>
   </main>

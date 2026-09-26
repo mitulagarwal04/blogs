@@ -1,4 +1,4 @@
-"""Daily Notes — FastAPI backend.
+"""buhh — FastAPI backend.
 
 Posts live as Markdown files in posts/*.md with YAML frontmatter:
   title, date (YYYY-MM-DD), tags (list), excerpt
@@ -31,13 +31,14 @@ TAG_COLORS = {
     "life": "#EF3E36",
     "learning": "#A855F7",
     "building": "#3B7CF6",
+    "langchain": "#3B7CF6",
     "readings": "#FF9D00",
     "tweets": "#EF3E36",
     "notes": "#3E8E5E",
 }
 DEFAULT_TAG_COLOR = "#8C8C8C"
 
-app = FastAPI(title="Daily Notes")
+app = FastAPI(title="buhh")
 app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
 
@@ -104,6 +105,15 @@ def tag_color(tag: str) -> str:
     return TAG_COLORS.get(tag, DEFAULT_TAG_COLOR)
 
 
+def site_stats(posts: list[dict]) -> dict:
+    return {
+        "posts": len(posts),
+        "tags": len(all_tags(posts)),
+        "words": sum(p["words"] for p in posts),
+        "latest": posts[0]["date"] if posts else "—",
+    }
+
+
 def split_code_comments(body: str) -> str:
     """Pull full-line `#` comments out of python fenced blocks.
 
@@ -143,12 +153,7 @@ def index(
 ):
     posts = load_posts()
     tags = all_tags(posts)
-    stats = {
-        "posts": len(posts),
-        "tags": len(tags),
-        "words": sum(p["words"] for p in posts),
-        "latest": posts[0]["date"] if posts else "—",
-    }
+    stats = site_stats(posts)
 
     ql = q.strip().lower()
     if ql:
@@ -191,6 +196,7 @@ def read_post(request: Request, slug: str):
             "prev_post": prev_post,
             "next_post": next_post,
             "tag_color": tag_color,
+            "stats": site_stats(posts),
         },
     )
 

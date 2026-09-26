@@ -1,5 +1,5 @@
 :root{
-  --bg:#E9E6DD; --surface:#FBF8F1; --ink:#232323; --soft:#55524B; --muted:#8C8C8C;
+  --bg:#E9E6DD; --surface:#FBF8F1; --ink:#232323; --soft:#55524B;
   --line:#D8D3C8; --paper:#FFF1C6; --yellow:#FFD21E; --orange:#FF9D00; --blue:#3B7CF6;
   --red:#EF3E36; --purple:#A855F7; --green:#3E8E5E; --pink:#F87171; --blue-soft:#B9C7FF;
   --shadow:#232323; --header-bg:rgba(233,230,221,.92);
@@ -7,7 +7,7 @@
   --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,monospace;
 }
 [data-theme="dark"]{
-  --bg:#211F1C; --surface:#2C2A26; --ink:#FBF8F1; --soft:#CFC9BB; --muted:#9C978A;
+  --bg:#211F1C; --surface:#2C2A26; --ink:#FBF8F1; --soft:#CFC9BB;
   --line:#4A473F; --paper:#3A3524; --shadow:#000;
   --header-bg:rgba(33,31,28,.92);
 }
@@ -57,7 +57,15 @@ h1.hero-title mark{background:var(--yellow);color:#232323;padding:0 .08em;border
 .search-header{display:flex;flex-wrap:wrap;gap:10px 12px;align-items:center;margin-bottom:6px}
 .search-wrap{display:flex;align-items:center;gap:8px;background:#fff;border:2px solid var(--ink);border-radius:999px;padding:7px 16px;box-shadow:2px 2px 0 var(--shadow);flex:1;min-width:220px}
 [data-theme="dark"] .search-wrap{background:#1a1917}
+/* skip link + branded keyboard focus */
+.skip{position:absolute;left:14px;top:-60px;z-index:100;font:12px var(--mono);text-transform:uppercase;letter-spacing:.05em;background:var(--yellow);color:#232323;border:2px solid var(--ink);border-radius:999px;padding:8px 16px;text-decoration:none;transition:top .12s}
+.skip:focus{top:12px}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:2px;border-radius:4px}
 .search-wrap input{border:0;outline:0;background:transparent;font:13px var(--mono);color:var(--ink);width:100%}
+/* the input itself has no outline by design, so the wrapper must show focus */
+.search-wrap:focus-within{background:var(--yellow)}
+.search-wrap:focus-within input{color:#232323}
+.search-wrap:focus-within input::placeholder{color:#55524B}
 .achip{font:12.5px var(--mono);border:2px solid var(--ink);border-radius:999px;padding:6px 14px;background:#fff;color:#55524B;box-shadow:2px 2px 0 var(--shadow);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:transform .08s,box-shadow .08s}
 [data-theme="dark"] .achip{background:#1a1917;color:var(--soft)}
 .achip:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--shadow)}
@@ -220,6 +228,8 @@ footer a{color:var(--soft)}
 @media(max-width:900px){.tiles{grid-template-columns:repeat(2,1fr)}.missing{grid-template-columns:1fr}.missing .side-img img{width:130px}
   .home-layout{grid-template-columns:1fr}
   .reader{order:-1}
+  /* no nested scroll trap on small screens: let the reader flow with the page */
+  #reader-body{max-height:none;overflow:visible}
 }
 @media(max-width:640px){
   main{padding:0 10px 60px}
@@ -230,4 +240,8 @@ footer a{color:var(--soft)}
   .hero-row{gap:16px}.hero-sub{font-size:16px}
   .prevnext{grid-template-columns:1fr}
   .home-layout{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition:none !important;animation:none !important}
 }
