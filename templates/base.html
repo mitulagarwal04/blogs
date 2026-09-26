@@ -14,7 +14,10 @@
 <body>
 <div class="topbar">
   <a class="wordmark" href="/"><img src="/static/patty.png" alt="">daily notes</a>
-  <button class="theme-btn" id="theme-toggle" aria-label="Toggle dark mode">dark</button>
+  <button class="theme-btn" id="theme-toggle" aria-label="Toggle dark mode">
+    <svg class="icon icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    <svg class="icon icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M4.3 4.3l1.7 1.7M18 18l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.3 19.7l1.7-1.7M18 6L19.7 4.3"/></svg>
+  </button>
 </div>
 <main>
 {% block content %}{% endblock %}
