@@ -1,12 +1,13 @@
 {% extends "base.html" %}
-{% block title %}Daily Notes{% endblock %}
+{% block title %}blogs{% endblock %}
 {% block content %}
 <header class="hero">
   <div class="hero-row">
     <div class="hero-img"><img src="/static/hero.png" alt="SpongeBob bursting out of a bathtub"></div>
     <div class="hero-text">
-      <h1 class="hero-title">Daily <mark>Notes</mark></h1>
-      <p class="hero-sub">I keep my notes here instead of scattering them across timelines. What I'm learning, what I'm building, what I read, and short stuff.</p>
+      <h1 class="hero-title">T - <mark>buhh's</mark></h1>
+      <p class="hero-sub">I keep my notes here instead of scattering them across timelines. What I'm learning, what I'm
+        building, what I read, and short stuff.</p>
       <div class="meta">updated {{ stats.latest }} · {{ stats.posts }} posts so far</div>
     </div>
   </div>
@@ -23,11 +24,13 @@
     {% if posts %}
     {% set featured = posts[0] %}
     <div class="pad">
-      <div class="meta" id="reader-kicker">{% if q or active_tag %}Top match{% else %}Latest{% endif %} · <span id="reader-date">{{ featured.date }}</span></div>
+      <div class="meta" id="reader-kicker">{% if q or active_tag %}Top match{% else %}Latest{% endif %} · <span
+          id="reader-date">{{ featured.date }}</span></div>
       <h2 id="reader-title"><a href="/post/{{ featured.slug }}">{{ featured.title }}</a></h2>
       <div class="by" id="reader-meta">{{ featured.reading_mins }} min read · {{ featured.words }} words</div>
       <div class="reader-tags" id="reader-tags">
-        {% for t in featured.tags %}<span class="pill"><span class="dot" style="background:{{ tag_color(t) }};width:8px;height:8px"></span> #{{ t }}</span>{% endfor %}
+        {% for t in featured.tags %}<span class="pill"><span class="dot"
+            style="background:{{ tag_color(t) }};width:8px;height:8px"></span> #{{ t }}</span>{% endfor %}
       </div>
       <div class="article-body" id="reader-body">{{ featured.html | safe }}</div>
       <div class="reader-foot">
@@ -48,7 +51,8 @@
         <h2>Notes</h2>
         <p class="lede">Search, or pick a tag.</p>
         <div class="search-header">
-          <label class="search-wrap"><input id="q" type="search" placeholder="Search notes…  (e.g. fastapi)" value="{{ q }}" autocomplete="off"></label>
+          <label class="search-wrap"><input id="q" type="search" placeholder="Search notes…  (e.g. fastapi)"
+              value="{{ q }}" autocomplete="off"></label>
           <form method="get" action="/" style="display:contents">
             <input type="hidden" name="q" value="{{ q }}">
             <select class="sortsel" name="sort" onchange="this.form.submit()" aria-label="Sort">
@@ -61,30 +65,40 @@
         <div class="search-header" id="tags">
           <a class="achip {{ 'on' if not active_tag else '' }}" href="/" data-tag-filter="">✦ all</a>
           {% for t in tags %}
-          <a class="achip {{ 'on' if active_tag==t.name else '' }}" href="/?tag={{ t.name }}" data-tag-filter="{{ t.name }}"><span class="dot" style="background:{{ t.color }}"></span>#{{ t.name }} · {{ t.count }}</a>
+          <a class="achip {{ 'on' if active_tag==t.name else '' }}" href="/?tag={{ t.name }}"
+            data-tag-filter="{{ t.name }}"><span class="dot" style="background:{{ t.color }}"></span>#{{ t.name }} · {{
+            t.count }}</a>
           {% endfor %}
         </div>
-        <div id="results-bar" class="meta" style="display:none;margin-top:8px"><span></span> · <a href="/">clear</a></div>
+        <div id="results-bar" class="meta" style="display:none;margin-top:8px"><span></span> · <a href="/">clear</a>
+        </div>
       </div>
     </div>
     <div class="side-list" id="cards">
       {% for p in posts %}
-      <article class="card compact {{ 'active' if loop.first else '' }}" data-slug="{{ p.slug }}" data-title="{{ p.title }}" data-date="{{ p.date }}" data-mins="{{ p.reading_mins }}" data-words="{{ p.words }}" data-search="{{ p.title }} {{ p.excerpt }} {{ p.tags|join(' ') }}" data-tags="{{ p.tags|join(',') }}">
+      <article class="card compact {{ 'active' if loop.first else '' }}" data-slug="{{ p.slug }}"
+        data-title="{{ p.title }}" data-date="{{ p.date }}" data-mins="{{ p.reading_mins }}" data-words="{{ p.words }}"
+        data-search="{{ p.title }} {{ p.excerpt }} {{ p.tags|join(' ') }}" data-tags="{{ p.tags|join(',') }}">
         <div class="card-top"><span class="rank">{{ loop.index }}</span>
-          {% if p.tags %}<span class="catpill" style="border-color:{{ tag_color(p.tags[0]) }}">#{{ p.tags[0] }}</span>{% endif %}
+          {% if p.tags %}<span class="catpill" style="border-color:{{ tag_color(p.tags[0]) }}">#{{ p.tags[0] }}</span>{%
+          endif %}
           <span style="margin-left:auto" class="meta">{{ p.date }}</span>
         </div>
         <h3><a href="/post/{{ p.slug }}" data-preview="{{ p.slug }}">{{ p.title }}</a></h3>
         <div class="by">{{ p.reading_mins }} min read</div>
         <p class="desc">{{ p.excerpt }}</p>
         <div class="links">
-          {% for t in p.tags %}<span class="pill"><span class="dot" style="background:{{ tag_color(t) }};width:8px;height:8px"></span> #{{ t }}</span>{% endfor %}
-          <button class="btn primary preview-btn" data-preview="{{ p.slug }}" style="margin-left:auto;padding:6px 14px" type="button">Read →</button>
+          {% for t in p.tags %}<span class="pill"><span class="dot"
+              style="background:{{ tag_color(t) }};width:8px;height:8px"></span> #{{ t }}</span>{% endfor %}
+          <button class="btn primary preview-btn" data-preview="{{ p.slug }}" style="margin-left:auto;padding:6px 14px"
+            type="button">Read →</button>
         </div>
       </article>
       {% endfor %}
     </div>
-    <div id="no-results" class="empty">Nothing matches. <a href="/">Clear filters</a> or write it in <code>posts/</code>.</div>
+    <div id="no-results" class="empty">Nothing matches. <a href="/">Clear filters</a> or write it in
+      <code>posts/</code>.
+    </div>
   </aside>
 </div>
 
@@ -95,13 +109,11 @@
 <section class="missing">
   <div>
     <h2>What's not in the open</h2>
-    <p class="sub">Things I want to add when I get to them:</p>
+    <p class="sub">Updates incoming:</p>
     <ul>
-      <li><b>RSS feed</b> — so this works in a feed reader like a normal blog</li>
-      <li><b>/now page</b> — what I'm doing this month, updated by hand</li>
+      <li><b>LLM Book</b> — reading a llm building from scratch book, will update it here.</li>
+      <li><b>/now page</b> — what I'm doing upcoming weeks, my todos.</li>
       <li><b>Reply by email</b> — a mailto link on every post instead of comments</li>
-      <li><b>Reading list</b> — one page pulling everything tagged #readings</li>
-      <li><b>Search without JS</b> — the search box works now, but only with JS on</li>
     </ul>
   </div>
   <div class="side-img"><img src="/static/gary.png" alt="Gary the snail"></div>

@@ -65,11 +65,11 @@ chain = prompt | llm() | StrOutputParser()
 
 ## we can call the llm in 3 different way
 ## 1. one-shot = this is via chain.invoke then pass the values of keys in there.
-print(chain.invoke({'text': 'Langgraph persists graph state as checkpoints per super-step.'})[:120])
+print(chain.invoke({'text': 'we have many ways of getting results from a chain - invoke, batch or stream, you can choose anyone and customize accordingly.'})[:120])
 
 ## 2. We can stream the tokens or the chunk of tokens -- whichever as llm outputs.
 print('STREAM:', end= ' ')
-for c in chain.stream({'text': 'stream these tokens visibly'}):
+for c in chain.stream({'text': 'stream these tokens so i can see them'}):
     print(c, end='', flush=True)
 
 print()
