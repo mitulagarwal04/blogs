@@ -108,6 +108,12 @@ def index(
 ):
     posts = load_posts()
     tags = all_tags(posts)
+    stats = {
+        "posts": len(posts),
+        "tags": len(tags),
+        "words": sum(p["words"] for p in posts),
+        "latest": posts[0]["date"] if posts else "—",
+    }
 
     ql = q.strip().lower()
     if ql:
@@ -118,14 +124,6 @@ def index(
         posts = list(reversed(posts))
     elif sort == "shortest":
         posts = sorted(posts, key=lambda p: p["words"])
-
-    all_posts = load_posts() if (ql or tag) else posts
-    stats = {
-        "posts": len(all_posts),
-        "tags": len(all_tags(all_posts)),
-        "words": sum(p["words"] for p in all_posts),
-        "latest": all_posts[0]["date"] if all_posts else "—",
-    }
     return templates.TemplateResponse(
         request,
         "index.html",

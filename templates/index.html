@@ -67,7 +67,7 @@
         <div id="results-bar" class="meta" style="display:none;margin-top:8px"><span></span> · <a href="/">clear</a></div>
       </div>
     </div>
-    <div class="grid side-list" id="cards">
+    <div class="side-list" id="cards">
       {% for p in posts %}
       <article class="card compact {{ 'active' if loop.first else '' }}" data-slug="{{ p.slug }}" data-title="{{ p.title }}" data-date="{{ p.date }}" data-mins="{{ p.reading_mins }}" data-words="{{ p.words }}" data-search="{{ p.title }} {{ p.excerpt }} {{ p.tags|join(' ') }}" data-tags="{{ p.tags|join(',') }}">
         <div class="card-top"><span class="rank">{{ loop.index }}</span>

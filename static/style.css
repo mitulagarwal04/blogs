@@ -16,7 +16,7 @@ html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;transition:background .15s,color .15s}
 a{color:inherit}
 img{display:block;max-width:100%}
-main,.container{max-width:1440px;margin:auto;padding:0 14px 80px}
+main{max-width:1440px;margin:auto;padding:0 14px 80px}
 /* top bar: wordmark left, toggle right */
 .topbar{max-width:1440px;margin:auto;padding:18px 14px 0;display:flex;justify-content:space-between;align-items:center}
 .wordmark{display:flex;align-items:center;gap:10px;text-decoration:none;font:700 13px var(--mono);letter-spacing:.06em;text-transform:uppercase}
@@ -58,13 +58,12 @@ h1.hero-title mark{background:var(--yellow);color:#232323;padding:0 .08em;border
 .search-wrap{display:flex;align-items:center;gap:8px;background:#fff;border:2px solid var(--ink);border-radius:999px;padding:7px 16px;box-shadow:2px 2px 0 var(--shadow);flex:1;min-width:220px}
 [data-theme="dark"] .search-wrap{background:#1a1917}
 .search-wrap input{border:0;outline:0;background:transparent;font:13px var(--mono);color:var(--ink);width:100%}
-.band,.achip{font:12.5px var(--mono);border:2px solid var(--ink);border-radius:999px;padding:6px 14px;background:#fff;color:#55524B;box-shadow:2px 2px 0 var(--shadow);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:transform .08s,box-shadow .08s}
-[data-theme="dark"] .band,[data-theme="dark"] .achip{background:#1a1917;color:var(--soft)}
-.band:hover,.achip:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--shadow)}
-.band.on,.achip.on{background:var(--yellow);color:#232323}
+.achip{font:12.5px var(--mono);border:2px solid var(--ink);border-radius:999px;padding:6px 14px;background:#fff;color:#55524B;box-shadow:2px 2px 0 var(--shadow);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:transform .08s,box-shadow .08s}
+[data-theme="dark"] .achip{background:#1a1917;color:var(--soft)}
+.achip:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--shadow)}
+.achip.on{background:var(--yellow);color:#232323}
 .dot{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--ink);display:inline-block;flex-shrink:0}
 .sortsel{font:12px var(--mono);border:2px solid var(--ink);border-radius:999px;padding:6px 12px;background:var(--surface);color:var(--ink);box-shadow:2px 2px 0 var(--shadow)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;margin-top:20px}
 .card{background:var(--surface);border:2.5px solid var(--ink);border-radius:22px;padding:16px 16px 14px;box-shadow:5px 5px 0 var(--shadow);transition:transform .1s,box-shadow .1s;display:flex;flex-direction:column;gap:8px}
 .card:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--shadow)}
 .card-top{display:flex;align-items:center;gap:8px;font:11px var(--mono)}
@@ -76,7 +75,6 @@ h1.hero-title mark{background:var(--yellow);color:#232323;padding:0 .08em;border
 .card h3 a:hover{text-decoration:underline;text-decoration-color:var(--yellow);text-decoration-thickness:3px}
 .by{font:12px var(--mono);color:var(--soft)}
 .desc{color:var(--soft);font-size:15.5px;margin:0}
-.metrics{font:12px var(--mono);color:var(--soft);display:flex;gap:12px;flex-wrap:wrap}
 .links{border-top:1.5px dashed var(--line);padding-top:10px;display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;align-items:center}
 .btn{font:13px var(--mono);border:2px solid var(--ink);border-radius:999px;padding:9px 18px;background:var(--surface);color:var(--ink);box-shadow:3px 3px 0 var(--shadow);text-decoration:none;display:inline-block;cursor:pointer;transition:transform .08s,box-shadow .08s}
 .btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--shadow)}
@@ -139,7 +137,7 @@ footer a{color:var(--soft)}
   .reader{order:-1}
 }
 @media(max-width:640px){
-  main,.container{padding:0 10px 60px}
+  main{padding:0 10px 60px}
   .topbar{padding:14px 10px 0}
   .subnav{margin:18px -10px;padding:10px 10px;font-size:11px;gap:6px 16px}
   .tiles{gap:10px}

@@ -43,7 +43,7 @@
     }
     if(nores) nores.style.display = shown===0 ? "" : "none";
     // filters drive the middle reader: if the open note got filtered out, show the first match
-    if(follow !== false && typeof selectPost === "function"){
+    if(follow !== false){
       const vis = cards.filter(c=>c.style.display!=="none");
       if(vis.length && !vis.some(c=>c.dataset.slug===currentSlug)){
         selectPost(vis[0].dataset.slug, false);
