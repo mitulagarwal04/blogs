@@ -55,6 +55,8 @@ Krabby Patty bullets).
 4. ~~Search that works without JS.~~ Done in v0.2.1 (search submits `?q=`).
 5. ~~Reply-by-email links per post.~~ Done in v0.3 — mailto replaced with
    click-to-copy email in the footer.
+6. Hosting: GCP e2-micro free tier (always-on) + DuckDNS + Caddy.
+   In progress — `Caddyfile` + `buhh.service` committed; VM setup next.
 
 ## Done log (continued) — v0.3
 

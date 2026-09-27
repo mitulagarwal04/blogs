@@ -33,3 +33,19 @@ git push
   as the password (GitHub → Settings → Developer settings → Tokens).
 - Never commit API keys or passwords. If you need secrets later, put them
   in a `.env` file (already ignored).
+
+## Host on GCP e2-micro (free tier, always-on)
+
+Repo is public, so the VM clones with no auth. Full runbook lives in
+chat history; the short version:
+
+```bash
+# on the VM (Debian 12, us-central1-a, e2-micro, HTTP+HTTPS firewall on):
+git clone https://github.com/mitulagarwal04/blogs.git
+cd blogs && uv sync
+# buhh.service -> /etc/systemd/system/ (replace YOU), enable + start
+# Caddyfile -> /etc/caddy/ (set your DuckDNS name), reload caddy
+```
+
+New post = `git push` here, then `git pull` on the VM. No restart
+needed (posts are parsed on every request).

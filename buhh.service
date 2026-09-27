@@ -1,0 +1,21 @@
+# Production systemd unit for buhh (GCP e2-micro). Canonical copy — on the VM:
+#   1. copy to /etc/systemd/system/buhh.service
+#   2. replace YOU with the VM username (run `whoami` on the VM)
+#   3. sudo systemctl daemon-reload && sudo systemctl enable --now buhh
+# Runs uvicorn without --reload, bound to localhost; Caddy is the only
+# thing that talks to it. Posts are parsed per request, so deploying a
+# new post is just `git pull` — no restart needed.
+[Unit]
+Description=buhh blog (uvicorn)
+After=network.target
+
+[Service]
+Type=simple
+User=YOU
+WorkingDirectory=/home/YOU/blogs
+ExecStart=/home/YOU/.local/bin/uv run uvicorn main:app --host 127.0.0.1 --port 8000
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

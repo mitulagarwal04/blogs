@@ -1,0 +1,7 @@
+# Production Caddyfile for buhh (GCP e2-micro).
+# Canonical copy — on the VM:
+#   sudo cp Caddyfile /etc/caddy/Caddyfile && sudo systemctl reload caddy
+# If your DuckDNS subdomain differs, replace the name below (one line).
+buhh.duckdns.org {
+	reverse_proxy 127.0.0.1:8000
+}
