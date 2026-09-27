@@ -57,6 +57,12 @@ Krabby Patty bullets).
    click-to-copy email in the footer.
 6. Hosting: GCP e2-micro free tier (always-on) + DuckDNS + Caddy.
    In progress — `Caddyfile` + `buhh.service` committed; VM setup next.
+   RESUME POINT (2026-09-27): domain `buhhblog.duckdns.org` reserved;
+   full runbook delivered in chat. User is in GCP console on project
+   `gen-lang-client-0943042309`, blocked at "Enable billing" — next:
+   link billing account → enable Compute Engine API → create VM
+   (`buhh-blog`, us-central1-a, e2-micro, Debian 12, HTTP+HTTPS on) →
+   report External IP, then live-walk SSH/install/deploy.
 
 ## Done log (continued) — v0.3
 
@@ -74,3 +80,7 @@ Krabby Patty bullets).
   (600px desktop / 440px mobile + fade, `overflow:clip`); reply-by-email mailto replaced with
   click-to-copy email moved to the footer beside `api`; footer tagline
   ("plain markdown, no database") removed.
+- 2026-09-27 (hosting): picked GCP e2-micro free tier over Render/Railway/
+  Fly.io/Oracle (strictly $0, no sleep). Reserved `buhhblog.duckdns.org`.
+  Committed `Caddyfile` + `buhh.service` + `GITHUB.md` deploy notes;
+  pushed (repo is public, VM clones with no auth).
